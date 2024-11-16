@@ -1,0 +1,30 @@
+name: CI
+
+permissions:
+  contents: write
+  
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: build
+        run: |
+          cd pota
+          npm install
+          npm run build
+
+      - name: deploy pages
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          branch: gh-pages
+          folder: pota/dist
