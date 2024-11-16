@@ -7,7 +7,7 @@
 		"start": "vite",
 		"dev": "vite",
 		"dev-share": "vite --host",
-		"build": "vite build",
+    "build": "vite build --base=/harriss-proportions/",
 		"serve": "vite preview"
 	},
 	"devDependencies": {
