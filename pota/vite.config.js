@@ -1,4 +1,5 @@
 import { defineConfig } from 'vite'
+import solid from 'vite-plugin-solid'
 
 export default defineConfig({
 	server: {
@@ -8,7 +9,5 @@ export default defineConfig({
 	build: {
 		target: 'esnext',
 	},
-	optimizeDeps: {
-		disabled: true,
-	},
+  plugins: [solid()],
 })

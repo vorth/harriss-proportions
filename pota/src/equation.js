@@ -26,7 +26,7 @@ const CanonicalExpression = ({ tree }) =>
     </Switch>`
 }
 
-const Equation = ({ tree }) =>
+export const Equation = ({ tree }) =>
 {
   html.define({ CanonicalExpression })
 
@@ -40,4 +40,3 @@ const Equation = ({ tree }) =>
     </math>`
 }
 
-html.define({ Equation });
