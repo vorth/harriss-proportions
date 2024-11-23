@@ -43,6 +43,13 @@
         display: flex;
         flex-direction: column;
         margin: auto;
+        padding-block: 8rem;
+      }
+
+      input {
+        width: 20rem;
+        margin: auto;
+        margin-block-end: 30px;
       }
 
       .equation {
@@ -75,16 +82,19 @@
       .inverse-block {
         width: min-content;
         height: min-content;
+        transform: rotate(0.5turn);
       }
       .plus-block {
-        display: flex;
+        display: grid;
+        grid-template-columns: min-content min-content;
       }
     </style>
     
-    <script type="module" crossorigin src="/harriss-proportions/assets/index-6c2469c0.js"></script>
+    <script type="module" crossorigin src="/harriss-proportions/assets/index-lTkY3fI1.js"></script>
   </head>
   <body>
     <noscript>The app requires JavaScript to be enabled</noscript>
-    
+
+    <div id="root"></div>
   </body>
 </html>
