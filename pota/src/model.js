@@ -11,7 +11,7 @@ export const b = {
 
 export const c = {
   left: { value: 1 },
-  right: a
+  right: { value: 'x' }
 }
 
 export const d = {
