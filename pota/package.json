@@ -16,7 +16,7 @@
 	},
 	"dependencies": {
 		"mathjs": "^13.2.2",
-		"pota": "^0.15.144"
+		"pota": "^0.17.180"
 	},
 	"prettier": {
 		"printWidth": 70,
