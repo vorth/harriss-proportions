@@ -34,3 +34,15 @@ export const e = {
   }
 }
 
+export const f = {
+  left: {
+    inverse: { value: 'x' }
+  },
+  right: {
+    inverse: {
+      left: { value: 1 },
+      right: { inverse: { value: 'x' } }
+    }
+  }
+}
+

@@ -8,7 +8,7 @@ import { Equation } from './equation.js';
 import { Diagram } from './diagram.jsx';
 import { SelectionProvider, useSelection } from './context.jsx';
 
-import { e } from './model.js';
+import { f } from './model.js';
 
 
 const ProportionsUI = ( props ) =>
@@ -51,7 +51,7 @@ const Proportions = ( props ) =>
 
 const App = () =>
 {
-  return ( <Proportions tree={ e } scale={ 20 } /> )
+  return ( <Proportions tree={ f } scale={ 20 } /> )
 }
 
 const root = document.getElementById( 'root' )
