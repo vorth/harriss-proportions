@@ -8,15 +8,16 @@ import { Equation } from './equation.js';
 import { Diagram } from './diagram.jsx';
 import { SelectionProvider, useSelection } from './context.jsx';
 
-import { f } from './model.js';
+import { rect, invrect, sum, d, e, f } from './model.js';
 
 
 const ProportionsUI = ( props ) =>
 {
-  const setWidth = w => {} //console.log( 'total width', w );
+  const setSynSize = w => {} //console.log( 'total width', w );
 
   const { state } = useSelection();
   const [ x, setX ] = createSignal( 1.5 );
+  const [ rotate, setRotate ] = createSignal( false );
 
   const onInput = ( { target } ) =>
   {
@@ -24,17 +25,19 @@ const ProportionsUI = ( props ) =>
   }
   
   onMount( () => {
-    potaRender( () => Equation( { tree: state } ), document.getElementById( 'equation-root' ) );
+    // potaRender( () => Equation( { tree: state } ), document.getElementById( 'equation-root' ) );
   });
 
   return (
     <div class='proportion-display'>
       <input type="range" id="x" name="volume" min="1" max="4" step="0.01" value={x()} onInput={onInput} />
 
+      <input type="checkbox" name="rotate" id="rotate" onInput={(e) => setRotate(e.target.checked)} />
+
       <div id="equation-root"></div>
 
       <div class='diagram' >
-        <Diagram tree={state} path={[]} x={x()} rotated={true} size={props.scale} setWidth={setWidth} />
+        <Diagram tree={state} path={[]} x={x()} rotated={rotate()} inhSize={props.scale} setSynSize={setSynSize} />
       </div>
     </div>
   );
@@ -51,7 +54,7 @@ const Proportions = ( props ) =>
 
 const App = () =>
 {
-  return ( <Proportions tree={ f } scale={ 20 } /> )
+  return ( <Proportions tree={ sum } scale={ 20 } /> )
 }
 
 const root = document.getElementById( 'root' )
