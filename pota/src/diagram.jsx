@@ -53,8 +53,8 @@ const SumDiagram = ( props ) =>
 const InverseDiagram = ( props ) =>
 {
   let [ variableSize, setVariableSize ] = createSignal( 0 );
-  const xWidth = () => props.rotated? variableSize() : props.inhSize;
-  const xHeight = () => props.rotated? props.inhSize : variableSize();
+  const xWidth = () => scale() * (props.rotated? variableSize() : props.inhSize);
+  const xHeight = () => scale() * (props.rotated? props.inhSize : variableSize());
   const scale = () => props.inhSize / variableSize();
   createEffect( () => props.setSynSize && props.setSynSize( scale() * props.inhSize ) );
 
@@ -68,7 +68,7 @@ const InverseDiagram = ( props ) =>
   const { toggleSelection } = useSelection();
 
   return (
-    <div class={`inverse-block block ${props.tree.selected?'selected':''}`} style={ style() } >
+    <div class={`inverse-block ${props.tree.selected?'selected':''}`} style={ style() } >
       <Diagram tree={props.tree.inverse} path={[ ...props.path, 'inverse' ]} rotated={!props.rotated} inhSize={props.inhSize} x={props.x} setSynSize={setVariableSize} />
     </div>
   );

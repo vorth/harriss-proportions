@@ -18,7 +18,7 @@ export const d = {
   left: { value: 1 },
   right: {
     left: { value: 'x' },
-    right: invrect
+    right: { inverse: { value: 'x'}}
   }
 }
 

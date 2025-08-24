@@ -54,7 +54,7 @@ const Proportions = ( props ) =>
 
 const App = () =>
 {
-  return ( <Proportions tree={ sum } scale={ 20 } /> )
+  return ( <Proportions tree={ e } scale={ 20 } /> )
 }
 
 const root = document.getElementById( 'root' )
