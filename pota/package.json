@@ -10,14 +10,9 @@
 		"build": "vite build --base=/harriss-proportions/",
 		"serve": "vite preview"
 	},
-	"devDependencies": {
-		"vite": "^5.0.8",
-		"vite-plugin-solid": "^2.8.0"
-	},
 	"dependencies": {
-		"@rollup/rollup-darwin-arm64": "^4.50.0",
 		"mathjs": "^13.2.2",
-		"pota": "^0.17.180"
+		"solid-js": "^1.9.9"
 	},
 	"prettier": {
 		"printWidth": 70,
@@ -32,5 +27,9 @@
 		"arrowParens": "avoid",
 		"proseWrap": "never",
 		"endOfLine": "lf"
+	},
+	"devDependencies": {
+		"vite": "^7.1.4",
+		"vite-plugin-solid": "^2.11.8"
 	}
 }

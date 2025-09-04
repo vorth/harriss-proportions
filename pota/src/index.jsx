@@ -2,9 +2,9 @@
 import { createSignal, onMount } from 'solid-js'
 import { render } from 'solid-js/web'
 
-import { render as potaRender } from 'pota';
+// import { render as potaRender } from 'pota';
 
-import { Equation } from './equation.js';
+// import { Equation } from './equation.js';
 import { Diagram } from './diagram.jsx';
 import { SelectionProvider, useSelection } from './context.jsx';
 
