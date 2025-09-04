@@ -27,6 +27,7 @@ jobs:
         with:
           node-version: '22'
           cache: 'pnpm'
+          cache-dependency-path: './pota/pnpm-lock.yaml'
 
       - name: build
         run: |
