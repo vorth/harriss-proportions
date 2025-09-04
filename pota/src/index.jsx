@@ -32,7 +32,7 @@ const ProportionsUI = ( props ) =>
     <div class='proportion-display'>
       <input type="range" id="x" name="volume" min="1" max="4" step="0.01" value={x()} onInput={onInput} />
 
-      <input type="checkbox" name="rotate" id="rotate" onInput={(e) => setRotate(e.target.checked)} />
+      {/* <input type="checkbox" name="rotate" id="rotate" onInput={(e) => setRotate(e.target.checked)} /> */}
 
       <div id="equation-root"></div>
 
