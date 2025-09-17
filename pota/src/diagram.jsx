@@ -40,8 +40,6 @@ const SumDiagram = ( props ) =>
   } );
   const style = () => ({ height: `${xHeight()}rem`, width: `${xWidth()}rem`, 'writing-mode': writingMode() });
 
-  const { toggleSelection } = useSelection();
-
   return (
     <div class={`plus-block block ${props.tree.selected?'selected':''}`} style={ style() } >
       <Diagram tree={props.tree.left} path={[ ...props.path, 'left' ]}  x={props.x} rotated={props.rotated} inhSize={props.inhSize} setSynSize={setLeftWidth} />
@@ -64,8 +62,6 @@ const InverseDiagram = ( props ) =>
     'transform' : `scale(${scale()})`,
     'transform-origin': 'top left',
   });
-
-  const { toggleSelection } = useSelection();
 
   return (
     <div class={`inverse-block ${props.tree.selected?'selected':''}`} style={ style() } >

@@ -3,7 +3,7 @@ import { createContext, createSignal, useContext } from 'solid-js';
 import { createStore } from 'solid-js/store';
 
 
-const SelectionContext = createContext( {} );
+const SelectionContext = createContext( { toggleSelection: () => {} } );
 
 const pathsEqual = ( path1, path2 ) =>
 {
