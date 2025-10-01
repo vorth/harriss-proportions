@@ -17,7 +17,7 @@ const ProportionSystem = ( props ) =>
   const setSynSize = w => {} //console.log( 'total width', w );
 
   return (
-    <div>
+    <div class='proportion-system'>
       <Equation tree={props.tree} />
 
       <div class='diagram' >
