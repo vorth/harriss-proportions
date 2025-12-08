@@ -6,11 +6,21 @@ import { Equation } from './equation.jsx';
 import { Diagram } from './diagram.jsx';
 import { SelectionProvider, useSelection } from './context.jsx';
 
-import { rect, invrect, sum, d, e, f, generateExprs } from './model.js';
+import { test, generateGoodExprs } from './model.js';
 
+const queryParams = new URLSearchParams( window.location.search );
+const targetExpr = queryParams.get( 'expr' );
 
-const exprs = generateExprs();
-
+const exprs = [];
+if ( targetExpr ) {
+  console.log( targetExpr );
+  exprs.push( JSON.parse( targetExpr ) );
+} else {
+  for ( const e of generateGoodExprs( 1, 3 ) ) {
+    console.log( JSON.stringify( e ) );
+    exprs.push( e );
+  }
+}
 
 const ProportionSystem = ( props ) =>
 {
@@ -21,7 +31,7 @@ const ProportionSystem = ( props ) =>
       <Equation tree={props.tree} />
 
       <div class='diagram' >
-        <Diagram tree={props.tree} path={[]} x={props.x} rotated={props.rotate}
+        <Diagram tree={props.tree} path={[]} x={props.x} rotated={props.rotate} inverse={false}
           inhSize={props.scale} setSynSize={setSynSize} />
       </div>
     </div>

@@ -1,5 +1,5 @@
 
-import { createEffect, createSignal } from 'solid-js';
+import { createEffect, createSignal, mergeProps, Show, Switch } from 'solid-js';
 
 import { useSelection } from './context.jsx';
 
@@ -10,7 +10,7 @@ const Square = ( props ) =>
   createEffect( () => props.setSynSize && props.setSynSize( props.inhSize ) );
   const { toggleSelection } = useSelection();
 
-  return ( <div class={`one-block block ${props.tree.selected?'selected':''}`} style={ style() } onClick={(e)=>toggleSelection(e,props.path)} ></div> );
+  return ( <div class={`one-block block ${props.tree?.selected?'selected':''}`} style={ style() } onClick={(e)=>toggleSelection(e,props.path)} ></div> );
 }
 
 const Rectangle = ( props ) =>
@@ -24,7 +24,7 @@ const Rectangle = ( props ) =>
   createEffect( () => props.setSynSize && props.setSynSize( variableSize() ) );
   const { toggleSelection } = useSelection();
 
-  return ( <div class={`x-block block ${props.tree.selected?'selected':''}`} style={ style() } onClick={(e)=>toggleSelection(e,props.path)} ></div> );
+  return ( <div class={`x-block block ${props.tree?.selected?'selected':''}`} style={ style() } onClick={(e)=>toggleSelection(e,props.path)} ></div> );
 }
 
 const SumDiagram = ( props ) =>
@@ -41,10 +41,14 @@ const SumDiagram = ( props ) =>
   const style = () => ({ height: `${xHeight()}rem`, width: `${xWidth()}rem`, 'writing-mode': writingMode() });
 
   return (
-    <div class={`plus-block block ${props.tree.selected?'selected':''}`} style={ style() } >
-      <Diagram tree={props.tree.left} path={[ ...props.path, 'left' ]}  x={props.x} rotated={props.rotated} inhSize={props.inhSize} setSynSize={setLeftWidth} />
-      <Diagram tree={props.tree.right} path={[ ...props.path, 'right' ]}  x={props.x} rotated={props.rotated} inhSize={props.inhSize} setSynSize={setRightWidth} />
-    </div>
+    <Show when={props.tree.length !== 1 } fallback={
+      <Diagram tree={props.tree[ 0 ]} path={[ ...props.path, 0 ]}  x={props.x} rotated={props.rotated} inhSize={props.inhSize} setSynSize={props.setSynSize} style={ style() } />
+    }>
+      <div class={`plus-block block ${props.tree.selected?'selected':''}`} style={ style() } >
+        <Diagram tree={props.tree[ 0 ]} path={[ ...props.path, 'left' ]} x={props.x} rotated={props.rotated} inhSize={props.inhSize} setSynSize={setLeftWidth} />
+        <SumDiagram tree={props.tree.slice(1)} path={[ ...props.path, 'right' ]} x={props.x} rotated={props.rotated} inhSize={props.inhSize} setSynSize={setRightWidth} />
+      </div>
+    </Show>
   );
 }
 
@@ -65,24 +69,26 @@ const InverseDiagram = ( props ) =>
 
   return (
     <div class={`inverse-block ${props.tree.selected?'selected':''}`} style={ style() } >
-      <Diagram tree={props.tree.inverse} path={[ ...props.path, 'inverse' ]} rotated={!props.rotated} inhSize={props.inhSize} x={props.x} setSynSize={setVariableSize} />
+      <SumDiagram tree={props.tree} path={[ ...props.path ]} rotated={!props.rotated} inhSize={props.inhSize} x={props.x} setSynSize={setVariableSize} />
     </div>
   );
 }
 
 export const Diagram = ( props ) =>
 {
+  props = mergeProps( { inverse: true }, props );
+
   return (
     <Switch fallback={
-      <SumDiagram tree={props.tree} path={props.path} rotated={props.rotated} inhSize={props.inhSize} x={props.x} setSynSize={props.setSynSize} />}
+      <SumDiagram tree={props.tree} path={props.path} inverse={false} rotated={props.rotated} inhSize={props.inhSize} x={props.x} setSynSize={props.setSynSize} />}
     >
-    <Match when={props.tree.value === 1} >
+    <Match when={props.tree === 1} >
       <Square tree={props.tree} path={props.path} inhSize={props.inhSize} setSynSize={props.setSynSize} />
     </Match>
-    <Match when={props.tree.value === 'x'} >
+    <Match when={props.tree === 'x'} >
       <Rectangle tree={props.tree} path={props.path} rotated={props.rotated} inhSize={props.inhSize} x={props.x} setSynSize={props.setSynSize} />
     </Match>
-    <Match when={props.tree.inverse} >
+    <Match when={props.inverse === true} >
       <InverseDiagram tree={props.tree} path={props.path} rotated={props.rotated} inhSize={props.inhSize} x={props.x} setSynSize={props.setSynSize} />
     </Match>
   </Switch>

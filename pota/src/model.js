@@ -3,91 +3,59 @@ import { parse } from 'https://esm.sh/mathjs';
 
 const expr = parse( '1/(1+x)+1/(1+x+1/x)' );
 
-export const rect = { value: 'x' };
-
-export const invrect = {
-  inverse: rect
-}
-
-export const sum = {
-  left: invrect,
-  right: { value: 'x' }
-}
-
-export const d = {
-  left: { value: 1 },
-  right: {
-    left: { value: 'x' },
-    right: { inverse: { value: 'x'}}
-  }
-}
-
-export const e = {
-  left: {
-    left: { value: 1 },
-    right: {
-      inverse: sum
-    }
-  },
-  right: {
-    inverse: d
-  }
-}
-
-export const f = {
-  left: {
-    inverse: { value: 'x' }
-  },
-  right: {
-    inverse: {
-      left: { value: 1 },
-      right: { inverse: { value: 'x' } }
-    }
-  }
-}
+// Each array is an inverse of a sum, except the top one, which is just a sum.
+//  So this means "1/(1+x)+1/(1+x+1/x)",
+export const test = [
+  1,
+  [ 1, 'x' ],
+  [ [ 'x' ], 'x', 1 ],
+];
 
 
-function factory(i) {
-    if (i === 1) return { value: 1 };
-    if (i === 2) return { value: 'x' };
-    return { inverse: { value: 'x' } };
-}
-
-const Sum = ( l, r ) => ( { left: l, right: r } );
-const InverseSum = ( l, r ) => ( { inverse: Sum( l, r ) } );
-
-export const generateExprs = () =>
+export const generateExprs = function*( squares, rects )
 {
-  const exprs = new Map();
-
-  const addUnique = element => {
-    const str = JSON.stringify(element);
-    if (!exprs.has(str)) {
-        console.log("NEW " + str);
-        exprs.set(str, element);
-    }
+  if ( squares < 0 || rects < 0 )
+    return;
+  if ( squares === 0 && rects === 0 )
+    return;
+  if ( squares === 0 && rects === 1 ) {
+    yield [ 'x' ];
+    yield [ [ 'x' ] ];
+    return;
   }
-
-  const enumerate = expr =>
-  {
-    for (let a = 1; a < 3; a++) {
-      for (let b = 1; b < 3; b++) {
-        for (let c = 1; c < 3; c++) {
-          for (let d = 1; d < 3; d++) {
-            const ae = factory(a);
-            const be = factory(b);
-            const ce = factory(c);
-            const de = factory(d);
-            addUnique( expr(ae, be, ce, de) );
-          }
-        }
-      }
-    }
+  if ( squares === 1 && rects === 0 ) {
+    yield [ 1 ];
+    return;
   }
-  enumerate( (ae,be,ce,de) => InverseSum(Sum(ae, be), Sum(ce, de)) );
-  enumerate( (ae,be,ce,de) => InverseSum(Sum(ae, be), InverseSum(ce, de)) );
-  enumerate( (ae,be,ce,de) => InverseSum(InverseSum(ae, be), Sum(ce, de)) );
-  enumerate( (ae,be,ce,de) => InverseSum(InverseSum(ae, be), InverseSum(ce, de)) );
-  return Array.from(exprs.values());
+  if ( squares === 1 && rects === 1 ) {
+    yield [ 1, 'x' ];
+    yield [ 1, [ 'x' ] ];
+    yield [ [ 1, 'x' ] ];
+    yield [ [ 1, [ 'x' ] ] ];
+    return;
+  }
+  for ( const e of generateExprs( squares - 1, rects ) ) {
+    yield [ 1, ...e ];
+    yield [ 1, [ ...e ] ];
+  }
+  for ( const e of generateExprs( squares, rects - 1 ) ) {
+    yield [ 'x', ...e ];
+    yield [ 'x', [ ...e ] ];
+  }
+  for ( const e of generateExprs( squares, rects - 1 ) ) {
+    yield [ [ 'x' ], ...e ];
+    yield [ [ 'x' ], [ ...e ] ];
+  }
 }
 
+export const generateGoodExprs = function*( squares, rects )
+{
+  for ( const e of generateExprs( squares, rects - 1 ) ) {
+    yield [ [ 'x' ], ...e ];
+    yield [ [ 'x' ], [ ...e ] ];
+  }
+  for ( const e of generateExprs( squares - 1, rects ) ) {
+    yield [ 1, [ ...e ] ];
+    yield [ 1, ...e ];
+  }
+}
