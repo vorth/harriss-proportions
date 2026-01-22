@@ -1,8 +1,4 @@
 
-import { parse } from 'https://esm.sh/mathjs';
-
-const expr = parse( '1/(1+x)+1/(1+x+1/x)' );
-
 // Each array is an inverse of a sum, except the top one, which is just a sum.
 //  So this means "1/(1+x)+1/(1+x+1/x)",
 export const test = [
@@ -10,7 +6,7 @@ export const test = [
   [ 1, 'x' ],
   [ [ 'x' ], 'x', 1 ],
 ];
-
+// x = 1 + 1/( 1 + x ) + 1/( 1/( x ) + x + 1 )
 
 export const generateExprs = function*( squares, rects )
 {
@@ -58,4 +54,23 @@ export const generateGoodExprs = function*( squares, rects )
     yield [ 1, [ ...e ] ];
     yield [ 1, ...e ];
   }
+}
+
+export const printExpr = ( expr, top=true ) =>
+{
+  let result = top? 'x = ' : '';
+  if ( typeof expr === 'number' ) {
+    result += expr.toString();
+  } else if ( typeof expr === 'string' ) {
+    result += expr;
+  } else if ( Array.isArray( expr ) ) {
+    const parts = expr.map( e => printExpr( e, false ) );
+    const inner = parts.join( ' + ' );
+    if ( top ) {
+      result += inner;
+    } else {
+      result += `1/( ${inner} )`;
+    }
+  }
+  return result;
 }
