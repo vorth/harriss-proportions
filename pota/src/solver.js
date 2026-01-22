@@ -20,7 +20,7 @@ const loadPyodideInstance = async () => {
     
     // Load the Python solver code from file
     console.log('Loading solver.py...');
-    const response = await fetch('/src/python/solve.py');
+    const response = await fetch('/solve.py');
     const pythonCode = await response.text();
     await pyodide.runPythonAsync(pythonCode);
     
