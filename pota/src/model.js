@@ -16,7 +16,7 @@ export const generateExprs = function*( squares, rects )
     return;
   if ( squares === 0 && rects === 1 ) {
     yield [ 'x' ];
-    yield [ [ 'x' ] ];
+    // yield [ [ 'x' ] ];
     return;
   }
   if ( squares === 1 && rects === 0 ) {
@@ -53,6 +53,14 @@ export const generateGoodExprs = function*( squares, rects )
   for ( const e of generateExprs( squares - 1, rects ) ) {
     yield [ 1, [ ...e ] ];
     yield [ 1, ...e ];
+  }
+}
+
+export const generateRegionExprs = function*( regions )
+{
+  for ( let rects = 0; rects <= regions; rects++ ) {
+    console.log( `%%%%%%%%%%%%%%%% Generating ${regions-rects} squares, ${rects} rectangles` );
+    for ( const e of generateExprs( regions-rects, rects ) ) yield e;
   }
 }
 

@@ -7,7 +7,7 @@ import { Diagram } from './diagram.jsx';
 import { SelectionProvider, useSelection } from './context.jsx';
 import { solveEquation } from './solver.js';
 
-import { generateGoodExprs, printExpr } from './model.js';
+import { generateGoodExprs, generateRegionExprs, printExpr } from './model.js';
 
 const queryParams = new URLSearchParams( window.location.search );
 const targetExpr = queryParams.get( 'expr' );
@@ -23,7 +23,7 @@ async function loadExpressionsWithPositiveRoots() {
     const allExprs = [];
     
     // Generate all expressions
-    for ( const e of generateGoodExprs( 1, 3 ) ) {
+    for ( const e of generateRegionExprs( 4 ) ) {
       allExprs.push(e);
     }
     
