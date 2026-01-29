@@ -43,6 +43,9 @@ async function loadExpressionsWithPositiveRoots() {
     }
     
     console.log(`Found ${exprs.length} expressions with positive real roots`);
+    
+    // Sort by root value, least to greatest
+    exprs.sort((a, b) => a.rootValue - b.rootValue);
   }
   return exprs;
 }
