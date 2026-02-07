@@ -19,8 +19,8 @@ const loadPyodideInstance = async () => {
     await pyodide.loadPackage('sympy');
     
     // Load the Python solver code from file
-    console.log('Loading solver.py...');
-    const response = await fetch('/solve.py');
+    console.log('Loading solve.py...');
+    const response = await fetch('./solve.py');
     const pythonCode = await response.text();
     await pyodide.runPythonAsync(pythonCode);
     
