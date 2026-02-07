@@ -1,5 +1,5 @@
 {
-	"name": "pota-template-js",
+	"name": "proportion-systems",
 	"description": "",
 	"version": "0.0.1",
 	"type": "module",
@@ -7,7 +7,7 @@
 		"start": "vite",
 		"dev": "vite",
 		"dev-share": "vite --host",
-		"build": "vite build --base=/harriss-proportions/",
+		"build": "vite build --base=/proportion-systems/",
 		"serve": "vite preview"
 	},
 	"dependencies": {
